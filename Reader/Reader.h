@@ -47,7 +47,13 @@ struct Reader {
     static bool isValidReader(const Reader &reader);
 
     // thêm Reader vào mảng
-    static void addReaderToArray(const Reader &reader );
+    static void addReaderToArray(const Reader &reader);
+
+    // In kết quả printReader
+    static void printReader(const Reader &reader);
+
+    // In toàn bộ reader trong mảng
+    static void displayAllReaders();
 
 };
 

@@ -13,13 +13,13 @@ bool Reader::isValidateEmail(const std::string& email) {
     }
 
     // Find the position of '@'
-    int atPos = email.find(SPECIAL_EMAIL);
+    const int atPos = email.find(SPECIAL_EMAIL);
     if (atPos == 0 || atPos == length - 1) {
         return false; // '@' must exist, and it cannot be at the start or end
     }
 
     // Find the position of the last '.'
-    int dotPos = email.find_last_of(DOT);
+    const int dotPos = email.find_last_of(DOT);
     if (dotPos < atPos || dotPos == length - 1) {
         return false; // '.' must exist after '@' and cannot be at the end
     }
@@ -124,5 +124,24 @@ void Reader::addReaderToArray(const Reader &reader) {
 
     readers[index] = reader;
     index++;
+}
+
+void Reader::printReader(const Reader &reader) {
+    std::cout << "Reader Code: " << reader.code << "\n";
+    std::cout << "Full Name: " << reader.fullName << "\n";
+    std::cout << "ID Number: " << reader.idNumber << "\n";
+    std::cout << "Date of Birth: " << reader.dateOfBirth << "\n";
+    std::cout << "Gender: " << reader.gender << "\n";
+    std::cout << "Email: " << reader.email << "\n";
+    std::cout << "Address: " << reader.address << "\n";
+    std::cout << "Issue Date: " << Date::convertDateToString(reader.issueDate).c_str() << "\n";
+    std::cout << "Expiry Date: " << Date::convertDateToString(reader.expiryDate).c_str() << "\n\n";
+}
+
+void Reader::displayAllReaders() {
+    for (int i = 0; i < index; ++i) {
+        printf("\nThông tin độc giả thứ [%d] trong hệ thống là: ", index);
+        printReader(readers[index]);
+    }
 }
 
