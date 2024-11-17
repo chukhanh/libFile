@@ -108,7 +108,6 @@ bool Reader::isValidReader(const Reader &reader) {
 }
 
 void Reader::addReaderToArray(const Reader &reader) {
-
     if(index > MAX_SIZE) {
         std::cout << "Reader list is full. Cannot add more readers.\n";
         return;
