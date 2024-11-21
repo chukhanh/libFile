@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Date.h"
 
+#include "../Common/Common.h"
+
 // Method to validate year
 bool Date::isValidateYear(const int &year) {
     return year > 1;
@@ -187,5 +189,19 @@ std::string Date::convertDateToString(const Date &date) {
 
     // Ghép chuỗi với định dạng dd/mm/yyyy
     return dayStr + "/" + monthStr + "/" + yearStr;
+}
+
+Date Date::convertStringToDate(const std::string &stringDate) {
+    if (10 != stringDate.length() || stringDate[2] != '/' || stringDate[5] != '/') {
+        std::count << "Bắt buộc format của string là DD/MM/YYYY";
+        return Date(0,0,0);
+    }
+
+    const Date date(stringToInt(stringDate, 0, 2),stringToInt(stringDate, 3, 2), stringToInt(stringDate, 6, 4));
+    if(!isValidDate(date)) {
+        std::cout << "Ngày không hợp lệ. Vui lòng nhập lại.\n";
+        return Date(0,0,0);
+    }
+    return date;
 }
 

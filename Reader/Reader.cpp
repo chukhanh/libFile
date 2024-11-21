@@ -126,15 +126,17 @@ void Reader::addReaderToArray(const Reader &reader) {
 }
 
 void Reader::printReader(const Reader &reader) {
-    std::cout << "Reader Code: " << reader.code << "\n";
-    std::cout << "Full Name: " << reader.fullName << "\n";
-    std::cout << "ID Number: " << reader.idNumber << "\n";
-    std::cout << "Date of Birth: " << reader.dateOfBirth << "\n";
-    std::cout << "Gender: " << reader.gender << "\n";
+    std::cout << "Mã độc giả: " << reader.code << "\n";
+    std::cout << "Tên tác giả: " << reader.fullName << "\n";
+    std::cout << "CCCD: " << reader.idNumber << "\n";
+    std::cout << "Ngày sinh: " << reader.dateOfBirth << "\n";
+    std::cout << "Giới tính: " << reader.gender
+            << " (" << (reader.gender == MALE ? "Nam" : "Nữ")
+            << " )" << std::endl << "\n";
     std::cout << "Email: " << reader.email << "\n";
-    std::cout << "Address: " << reader.address << "\n";
-    std::cout << "Issue Date: " << Date::convertDateToString(reader.issueDate).c_str() << "\n";
-    std::cout << "Expiry Date: " << Date::convertDateToString(reader.expiryDate).c_str() << "\n\n";
+    std::cout << "Địa chỉ: " << reader.address << "\n";
+    std::cout << "Ngày lập thẻ: " << Date::convertDateToString(reader.issueDate).c_str() << "\n";
+    std::cout << "Ngày hết hạn thẻ: " << Date::convertDateToString(reader.expiryDate).c_str() << "\n\n";
 }
 
 void Reader::displayAllReaders() {

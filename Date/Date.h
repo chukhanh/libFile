@@ -14,7 +14,7 @@ public:
     int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // Constructor to initialize the Date
-    Date::Date() : year(0), month(0), day(0) {}
+    explicit Date() : year(0), month(0), day(0) {}
     explicit Date(const int day = 0, const int month = 0,const int year = 0) : day(day), month(month), year(year) {}
 
     // Method to check if a year is a leap year
@@ -57,6 +57,9 @@ public:
 
     // Convert Date to String
     static std::string convertDateToString(const Date &date);
+
+    // Convert String to Date
+    static Date convertStringToDate(const std::string &stringDate);
 };
 
 

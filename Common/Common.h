@@ -83,5 +83,9 @@ void createValue(const std::string (&title), int &value);
 // Kiêm tra giá trị chuỗi có rỗng hoặc blank không
 bool isBlank(const std::string (&str));
 
+// Convert String dạng số sang int
+int stringToInt(const std::string &str, int start, int length);
+
+
 
 #endif //COMMON_H

@@ -54,7 +54,6 @@ struct Reader {
 
     // In toàn bộ reader trong mảng
     static void displayAllReaders();
-
 };
 
 
