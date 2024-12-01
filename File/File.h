@@ -5,20 +5,19 @@
 #ifndef FILE_H
 #define FILE_H
 #include <iostream>
-#include "../Common/Common.h"
+
+enum FileType { READER, BOOK, BORROWING, SLIP_RETURN, UNKNOWN };
+
 
 struct File {
     std::string fileName; // Tên File
     std::string pathFile; // Full path to the file
     std::string type; // loại file
-    std::string categoryFile; // File dành cho loại danh mục
-
-    static File files[MAX_SIZE];
-    static int index;
+    FileType categoryFile; // File dành cho loại danh mục
 
     // Parameterized Constructor
-    File(const std::string &name = "", const std::string &path = "", const std::string &type = "",
-         const std::string &categoryFile = "")
+    explicit File(const std::string &name = "", const std::string &path = "", const std::string &type = "",
+                  const FileType &categoryFile = UNKNOWN)
         : fileName(name), pathFile(path), type(type), categoryFile(categoryFile) {
     }
 
@@ -36,16 +35,22 @@ struct File {
 
     // Tạo default File
     static void initializeDefaultFile() {
-        files[0] = File("Reader.txt", "File/", "txt", "Reader");
-        index = 0;
-        std::cout << "Default file initialized!" << std::endl;
+        readDataFromFile(READER);
+        readDataFromFile(BOOK);
+        readDataFromFile(BORROWING);
+        readDataFromFile(SLIP_RETURN);
     }
 
-
     // xuất data ra File theo type
-    static void exportToFile(const std::string &type);
+    static void exportToFile(const FileType &type);
 
-    // Kiếm file theo thể loại Reader, Book, etc
-    static File findFileByType(const std::string &type);
+    // đọc giữ liệu từ File
+    static void readDataFromFile(const FileType &type);
+
+    // Kiếm File theo type
+    static File findFileByType(const FileType &type);
+
+    // Tạo file
+    static void createFile(const std::string &fullPath);
 };
 #endif //FILE_H

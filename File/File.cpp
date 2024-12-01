@@ -4,38 +4,55 @@
 
 #include "File.h"
 #include <fstream>
+#include "../Common/Common.h"
 
 #include "../Reader/Reader.h"
 
 std::string File::getFullPath(const File &file) {
-    return file.pathFile + file.fileName;
+    return file.pathFile + file.fileName + "." + file.type;
 }
 
-void File::exportToFile(const std::string &type) {
+File File::findFileByType(const FileType &type) {
+    // Create a default File object with corresponding type
+    switch (type) {
+        case READER:
+            return File("Reader", DEFAULT_SAVE_FILE, DEFAULT_TYPE_FILE, READER);
+        case BOOK:
+            return File("Book", DEFAULT_SAVE_FILE, DEFAULT_TYPE_FILE, BOOK);
+        case BORROWING:
+            return File("BorrowingBook", DEFAULT_SAVE_FILE, DEFAULT_TYPE_FILE, BORROWING);
+        case SLIP_RETURN:
+            return File("SlipReturnBook", DEFAULT_SAVE_FILE, DEFAULT_TYPE_FILE, SLIP_RETURN);
+        default:
+            std::cout << "Unknown file type requested: " << type << std::endl;
+            return File("", "", "", UNKNOWN);
+    }
+}
+
+void File::createFile(const std::string &fullPath) {
+    // Ensure the directory exists (create it if necessary)
+    std::filesystem::create_directories(fullPath);
+
+    // Attempt to open the file in the default directory
+    std::ofstream fileOfstream(fullPath);
+}
+
+
+void File::exportToFile(const FileType &type) {
     File file = findFileByType(type);
-    std::ofstream fileOfstream(file.pathFile);
+    if (UNKNOWN == file.categoryFile) return;
+    std::string fullPath = getFullPath(file);
+    std::ofstream fileOfstream(fullPath);
 
     if (!fileOfstream.is_open()) {
-        std::cout << "Lỗi: Không thể mở file " << file.pathFile << std::endl;
-        return;
+        std::cout << "Error: Unable to open file " << file.pathFile <<
+                ". Creating a new file in the default directory.\n";
+        createFile(fullPath);
     }
 
     switch (type) {
-        case "Reader": {
+        case READER: {
             fileOfstream << "Code,Full Name,ID Number,Date of Birth,Gender,Email,Address,Issue Date,Expiry Date\n";
-            for (int i = 0; i < index; ++i) {
-                const Reader &reader = Reader::readers[i];
-                fileOfstream << reader.code << ","
-                        << reader.fullName << ","
-                        << reader.idNumber << ","
-                        << reader.dateOfBirth << ","
-                        << reader.gender << ","
-                        << reader.email << ","
-                        << reader.address << ","
-                        << Date::convertDateToString(reader.issueDate) << ","
-                        << Date::convertDateToString(reader.expiryDate) << "\n";
-            }
-            break;
         }
         default: std::cout << "Lỗi: Không thể xuất file bằng type " << type << std::endl;
     }
@@ -44,13 +61,36 @@ void File::exportToFile(const std::string &type) {
     std::cout << "Xuất file thành công: " << file.fileName << std::endl << "\n";
 }
 
-File File::findFileByType(const std::string &type) {
-    File file;
-    for (int i = 0; i < index; ++i) {
-        if (type == files[i].type) {
-            file = files[i];
-            break;
-        }
+void File::readDataFromFile(const FileType &type) {
+    File file = findFileByType(type);
+    if (UNKNOWN == file.categoryFile) return;
+    std::string fullPath = getFullPath(file);
+    std::ofstream fileOfstream(fullPath);
+
+    if (!fileOfstream.is_open()) {
+        createFile(fullPath);
     }
-    return file;
+
+    switch (type) {
+        case READER: {
+            fileOfstream << "Code,Full Name,ID Number,Date of Birth,Gender,Email,Address,Issue Date,Expiry Date\n";
+        }
+        break;
+        case BOOK: {
+            // fileOfstream << "Code,Full Name,ID Number,Date of Birth,Gender,Email,Address,Issue Date,Expiry Date\n";
+        }
+        break;
+        case BORROWING: {
+            // fileOfstream << "Code,Full Name,ID Number,Date of Birth,Gender,Email,Address,Issue Date,Expiry Date\n";
+        }
+        break;
+        case SLIP_RETURN: {
+            // fileOfstream << "Code,Full Name,ID Number,Date of Birth,Gender,Email,Address,Issue Date,Expiry Date\n";
+        }
+        break;
+        default: std::cout << "Lỗi: Không thể xuất file bằng type " << type << std::endl;
+    }
+
+    fileOfstream.close();
+    std::cout << "Đọc dữ liệu từ File: " << file.fileName << " Thành công." << std::endl << "\n";
 }

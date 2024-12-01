@@ -6,16 +6,15 @@
 #define DATE_H
 
 // struct Date
-class Date {
-public:
-    int year;
-    int month;
-    int day;
+struct Date {
+    int year{};
+    int month{};
+    int day{};
     int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    // Constructor to initialize the Date
-    explicit Date() : year(0), month(0), day(0) {}
-    explicit Date(const int day = 0, const int month = 0,const int year = 0) : day(day), month(month), year(year) {}
+    // Constructor
+    Date() : day(0), month(0), year(0) {}
+    Date(const int d, const int m, const int y) : day(d), month(m), year(y) {}
 
     // Method to check if a year is a leap year
     static bool isLeapYear(const int year) {
@@ -32,7 +31,7 @@ public:
     static bool isValidateMonth(const int &m);
 
     // Tạo ngày
-    static Date createDate(const std::string& title);
+    static Date createDate(const std::string &title);
 
     // Hàm cộng thêm số ngày vào ngày đã nhập
     static Date addDaysToDateManual(const Date &originalDate, int daysToAdd);
@@ -61,7 +60,6 @@ public:
     // Convert String to Date
     static Date convertStringToDate(const std::string &stringDate);
 };
-
 
 
 #endif //DATE_H

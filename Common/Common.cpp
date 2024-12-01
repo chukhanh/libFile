@@ -61,7 +61,7 @@ int stringToInt(const std::string &str, const int start, const int length) {
     int result = 0;
     for (int i = start; i < start + length; ++i) {
         if (str[i] < '0' || str[i] > '9') {
-            std::count << "Không thể chuyển giá trị trong string này";
+            // std::count << "Không thể chuyển giá trị trong string này";
             return 0;
         }
         result = result * 10 + (str[i] - '0');
